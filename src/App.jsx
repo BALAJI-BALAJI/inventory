@@ -5,6 +5,7 @@ import Products from "./pages/Products";
 import Suppliers from "./pages/Suppliers";
 import Categories from "./pages/Categories";
 import Transactions from "./pages/Transactions";
+import AddStaff from "./pages/AddStaff";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
 import { useAuth } from "./context/AuthContext";
@@ -26,6 +27,7 @@ function App() {
             <Route path="/suppliers" element={<Suppliers />} />
             <Route path="/categories" element={<Categories />} />
             <Route path="/transactions" element={<Transactions />} />
+            <Route path="/addstaff" element={<AddStaff />} />
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </div>

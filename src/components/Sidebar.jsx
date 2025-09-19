@@ -7,6 +7,7 @@ export default function Sidebar() {
     { name: "Suppliers", path: "/suppliers" },
     { name: "Categories", path: "/categories" },
     { name: "Transactions", path: "/transactions" },
+    { name: "Add Staff", path: "/addstaff" },
   ];
 
   return (

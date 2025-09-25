@@ -1,52 +1,81 @@
+import React from "react";
+
 export default function ProductTable({ products, onDelete, onEdit, onSell }) {
+  const handleDelete = (id) => {
+    if (window.confirm("Are you sure you want to delete this product?")) {
+      onDelete(id);
+    }
+  };
+
+  const groupedProducts = products.reduce((acc, product) => {
+    const categoryName = product.category?.name || "Uncategorized";
+    if (!acc[categoryName]) acc[categoryName] = [];
+    acc[categoryName].push(product);
+    return acc;
+  }, {});
+
   return (
-    <div className="overflow-x-auto shadow-md rounded-lg">
-      <table className="w-full border-collapse text-sm text-left">
-        <thead className="bg-gray-800 text-white">
-          <tr>
-            <th className="border p-3">#</th>
-            <th className="border p-3">Name</th>
-            <th className="border p-3">Qty</th>
-            <th className="border p-3">Cost Price</th>
-            <th className="border p-3">Selling Price</th>
-            <th className="border p-3">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {products.map((p, i) => (
-            <tr
-              key={p._id}
-              className="odd:bg-white even:bg-gray-50 hover:bg-gray-100 transition"
-            >
-              <td className="border p-3">{i + 1}</td>
-              <td className="border p-3">{p.name}</td>
-              <td className="border p-3">{p.quantity}</td>
-              <td className="border p-3">₹{p.costPrice}</td>
-              <td className="border p-3">₹{p.sellingPrice}</td>
-              <td className="border p-3 flex gap-2">
-                <button
-                  onClick={() => onEdit(p)}
-                  className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded"
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={() => onSell(p)}
-                  className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded"
-                >
-                  Sell
-                </button>
-                <button
-                  onClick={() => onDelete(p._id)}
-                  className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <table className="w-full border-collapse border border-gray-300">
+      <thead>
+        <tr className="bg-gray-800 text-white border-b border-gray-300">
+          <th className="p-2 border-r border-gray-300">#</th>
+          <th className="p-2 border-r border-gray-300">Name</th>
+          <th className="p-2 border-r border-gray-300">Qty</th>
+          <th className="p-2 border-r border-gray-300">Cost Price</th>
+          <th className="p-2 border-r border-gray-300">Selling Price</th>
+          <th className="p-2 border-r border-gray-300">Category</th>
+          <th className="p-2">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {Object.keys(groupedProducts).map((categoryName) => {
+          const productsInCategory = groupedProducts[categoryName];
+          const totalQty = productsInCategory.reduce(
+            (sum, p) => sum + (p.quantity || 0),
+            0
+          );
+
+          return (
+            <React.Fragment key={categoryName}>
+              <tr className="bg-gray-200 text-gray-800 font-semibold">
+                <td colSpan={7} className="p-2">
+                  {categoryName} — Total Qty: {totalQty}
+                </td>
+              </tr>
+              {productsInCategory.map((p, i) => (
+                <tr key={p._id} className="border-b border-gray-300">
+                  <td className="p-2 text-center border-r border-gray-300">{i + 1}</td>
+                  <td className="p-2 border-r border-gray-300">{p.name}</td>
+                  <td className="p-2 text-center border-r border-gray-300">{p.quantity}</td>
+                  <td className="p-2 text-center border-r border-gray-300">{p.costPrice}</td>
+                  <td className="p-2 text-center border-r border-gray-300">{p.sellingPrice}</td>
+                  <td className="p-2 text-center border-r border-gray-300">{p.category?.name || "—"}</td>
+                  <td className="p-2 flex gap-2 justify-center">
+                    <button
+                      onClick={() => onEdit(p)}
+                      className="bg-yellow-500 text-white px-2 rounded"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => onSell(p)}
+                      className="bg-green-500 text-white px-2 rounded"
+                    >
+                      Sell
+                    </button>
+                    <button
+                      onClick={() => handleDelete(p._id)}
+                      className="bg-red-500 text-white px-2 rounded"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </React.Fragment>
+          );
+        })}
+      </tbody>
+    </table>
   );
 }

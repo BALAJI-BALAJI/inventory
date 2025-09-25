@@ -1,14 +1,15 @@
 import { useState } from "react";
 import axios from "axios";
 
-export default function UserForm() {
+export default function AddStaff() {
   const [form, setForm] = useState({
-    role: "staff",
     name: "",
     phone: "",
     username: "",
     password: "",
+    role: "staff", // default role
   });
+  const [message, setMessage] = useState("");
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -18,47 +19,62 @@ export default function UserForm() {
     e.preventDefault();
     try {
       await axios.post("http://localhost:5000/staff", form);
-      alert("User created successfully");
-      setForm({ role: "staff", name: "", phone: "", username: "", password: "" });
+      setMessage("Staff added successfully!");
+      setForm({
+        name: "",
+        phone: "",
+        username: "",
+        password: "",
+        role: "staff",
+      });
     } catch (err) {
-      alert("Error: " + err.response?.data?.error || err.message);
+      console.error(err);
+      setMessage("Error adding staff");
     }
   };
 
   return (
-    <div className="p-6 bg-white shadow rounded w-96 mx-auto">
-      <h2 className="text-xl font-bold mb-4">Create Staff User</h2>
+    <div className="p-4 max-w-md mx-auto">
+      <h1 className="text-xl font-bold mb-4">Add Staff</h1>
+      {message && <p className="mb-2 text-blue-600">{message}</p>}
       <form onSubmit={handleSubmit} className="space-y-4">
+        
         <div>
           <label className="block mb-1">Name</label>
           <input
+            type="text"
             name="name"
             value={form.name}
             onChange={handleChange}
-            className="border w-full p-2 rounded"
+            className="border p-2 w-full rounded"
             required
           />
         </div>
+
         <div>
           <label className="block mb-1">Phone</label>
           <input
+            type="text"
             name="phone"
             value={form.phone}
             onChange={handleChange}
-            className="border w-full p-2 rounded"
+            className="border p-2 w-full rounded"
             required
           />
         </div>
+
         <div>
           <label className="block mb-1">Username</label>
           <input
+            type="text"
             name="username"
             value={form.username}
             onChange={handleChange}
-            className="border w-full p-2 rounded"
+            className="border p-2 w-full rounded"
             required
           />
         </div>
+
         <div>
           <label className="block mb-1">Password</label>
           <input
@@ -66,27 +82,29 @@ export default function UserForm() {
             name="password"
             value={form.password}
             onChange={handleChange}
-            className="border w-full p-2 rounded"
+            className="border p-2 w-full rounded"
             required
           />
         </div>
+
         <div>
           <label className="block mb-1">Role</label>
           <select
             name="role"
             value={form.role}
             onChange={handleChange}
-            className="border w-full p-2 rounded"
+            className="border p-2 w-full rounded"
           >
             <option value="staff">Staff</option>
             <option value="admin">Admin</option>
           </select>
         </div>
+
         <button
           type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded"
+          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
         >
-          Create User
+          Add Staff
         </button>
       </form>
     </div>

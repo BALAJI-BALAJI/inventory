@@ -1,14 +1,24 @@
 import { NavLink } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 export default function Sidebar() {
+  const { user } = useAuth();
+
   const links = [
     { name: "Dashboard", path: "/" },
     { name: "Products", path: "/products" },
     { name: "Suppliers", path: "/suppliers" },
     { name: "Categories", path: "/categories" },
     { name: "Transactions", path: "/transactions" },
-    { name: "Add Staff", path: "/addstaff" },
   ];
+
+  // Only show Add Staff and Staff List for admin
+  if (user?.role === "admin") {
+    links.push(
+      { name: "Add Staff", path: "/addstaff" },
+      { name: "Staff List", path: "/staff" } 
+    );
+  }
 
   return (
     <div className="w-60 bg-gray-900 text-white flex flex-col p-4">

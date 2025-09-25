@@ -33,6 +33,7 @@ export default function Categories() {
   };
 
   const handleDelete = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this category?")) return;
     await axios.delete(`http://localhost:5000/categories/${id}`);
     fetchCategories();
   };
@@ -41,8 +42,18 @@ export default function Categories() {
     <div>
       <h1 className="text-xl font-bold mb-4">Categories</h1>
       <div className="grid grid-cols-2 gap-2 mb-4">
-        <input value={name} onChange={e => setName(e.target.value)} placeholder="Category Name" className="border p-2"/>
-        <button onClick={handleSubmit} className="bg-blue-500 text-white px-3 rounded">{editingId ? "Update" : "Add"}</button>
+        <input
+          value={name}
+          onChange={e => setName(e.target.value)}
+          placeholder="Category Name"
+          className="border p-2"
+        />
+        <button
+          onClick={handleSubmit}
+          className="bg-blue-500 text-white px-3 rounded"
+        >
+          {editingId ? "Update" : "Add"}
+        </button>
       </div>
 
       <table className="w-full border-collapse text-sm">
@@ -54,13 +65,23 @@ export default function Categories() {
           </tr>
         </thead>
         <tbody>
-          {categories.map((c,i)=>(
+          {categories.map((c, i) => (
             <tr key={c._id} className="odd:bg-white even:bg-gray-50 hover:bg-gray-100">
-              <td className="border p-2">{i+1}</td>
+              <td className="border p-2">{i + 1}</td>
               <td className="border p-2">{c.name}</td>
               <td className="border p-2 flex gap-2">
-                <button onClick={()=>handleEdit(c)} className="bg-yellow-500 text-white px-2 py-1 rounded">Edit</button>
-                <button onClick={()=>handleDelete(c._id)} className="bg-red-500 text-white px-2 py-1 rounded">Delete</button>
+                <button
+                  onClick={() => handleEdit(c)}
+                  className="bg-yellow-500 text-white px-2 py-1 rounded"
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={() => handleDelete(c._id)}
+                  className="bg-red-500 text-white px-2 py-1 rounded"
+                >
+                  Delete
+                </button>
               </td>
             </tr>
           ))}

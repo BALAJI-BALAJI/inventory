@@ -5,7 +5,7 @@ export default function Sidebar() {
   const { user } = useAuth();
 
   const links = [
-    { name: "Dashboard", path: "/" },
+    { name: "Dashboard", path: "/dashboard" },
     { name: "Products", path: "/products" },
     { name: "Suppliers", path: "/suppliers" },
     { name: "Categories", path: "/categories" },

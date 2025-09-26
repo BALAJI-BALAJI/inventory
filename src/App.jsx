@@ -9,6 +9,7 @@ import AddStaff from "./pages/AddStaff";
 import StaffList from "./pages/StaffList";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
+import LowStockAlert from "./components/LowStockAlert";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { useAuth } from "./context/AuthContext";
 
@@ -36,6 +37,7 @@ function App() {
                     <Route path="/suppliers" element={<Suppliers />} />
                     <Route path="/categories" element={<Categories />} />
                     <Route path="/transactions" element={<Transactions />} />
+                    <Route path="/low-stock" element={<LowStockAlert />} />
                     {user?.role === "admin" && (
                       <>
                         <Route path="/addstaff" element={<AddStaff />} />

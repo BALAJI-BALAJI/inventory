@@ -1,40 +1,27 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState } from "react";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  // Initialize user from localStorage if available
-  const [user, setUser] = useState(() => {
-    const savedUser = localStorage.getItem("user");
-    return savedUser ? JSON.parse(savedUser) : null;
-  });
+  const [user, setUser] = useState(null);
 
-  const login = (role) => {
-    const userData = { role }; // role: admin/staff
-    setUser(userData);
-    localStorage.setItem("user", JSON.stringify(userData));
+  // Login function (for admin/staff)
+  const login = (roleOrUser) => {
+    if (roleOrUser === "admin") {
+      setUser({ role: "admin" });
+    } else {
+      setUser(roleOrUser);
+    }
   };
 
-  const logout = () => {
-    setUser(null);
-    localStorage.removeItem("user");
-  };
-
-  // Sync user state with localStorage if changed elsewhere
-  useEffect(() => {
-    const handleStorage = () => {
-      const savedUser = localStorage.getItem("user");
-      setUser(savedUser ? JSON.parse(savedUser) : null);
-    };
-    window.addEventListener("storage", handleStorage);
-    return () => window.removeEventListener("storage", handleStorage);
-  }, []);
+  const logout = () => setUser(null);
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, setUser, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
+// Custom hook
 export const useAuth = () => useContext(AuthContext);

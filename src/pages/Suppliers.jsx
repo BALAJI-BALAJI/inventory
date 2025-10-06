@@ -13,7 +13,7 @@ export default function Suppliers() {
   }, []);
 
   const fetchSuppliers = async () => {
-    const res = await axios.get("http://localhost:5000/suppliers");
+    const res = await axios.get("https://inventory-backend-9skz.onrender.com/suppliers");
     setSuppliers(res.data);
   };
 
@@ -23,10 +23,10 @@ export default function Suppliers() {
     const data = { name, contact, description };
 
     if (editingId) {
-      await axios.put(`http://localhost:5000/suppliers/${editingId}`, data);
+      await axios.put(`https://inventory-backend-9skz.onrender.com/suppliers/${editingId}`, data);
       setEditingId(null);
     } else {
-      await axios.post("http://localhost:5000/suppliers", data);
+      await axios.post("https://inventory-backend-9skz.onrender.com/suppliers", data);
     }
 
     setName("");
@@ -44,7 +44,7 @@ export default function Suppliers() {
 
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this supplier?")) return;
-    await axios.delete(`http://localhost:5000/suppliers/${id}`);
+    await axios.delete(`https://inventory-backend-9skz.onrender.com/suppliers/${id}`);
     fetchSuppliers();
   };
 

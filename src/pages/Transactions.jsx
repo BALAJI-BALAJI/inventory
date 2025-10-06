@@ -12,7 +12,7 @@ export default function Transactions() {
 
   const fetchTransactions = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/transactions");
+      const res = await axios.get("https://inventory-backend-9skz.onrender.com/transactions");
       setTransactions(res.data || []);
     } catch (err) {
       console.error(err);
@@ -25,7 +25,7 @@ export default function Transactions() {
   const handleClearAll = async () => {
     if (!window.confirm("Are you sure you want to delete all transactions?")) return;
     try {
-      await axios.delete("http://localhost:5000/transactions");
+      await axios.delete("https://inventory-backend-9skz.onrender.com/transactions");
       setTransactions([]);
     } catch (err) {
       console.error("Error clearing transactions", err);

@@ -28,12 +28,12 @@ export default function Dashboard() {
   }, []);
 
   const fetchProducts = async () => {
-    const res = await axios.get("http://localhost:5000/products");
+    const res = await axios.get("https://inventory-backend-9skz.onrender.com/products");
     setProducts(res.data);
   };
 
   const fetchTransactions = async () => {
-    const res = await axios.get("http://localhost:5000/transactions");
+    const res = await axios.get("https://inventory-backend-9skz.onrender.com/transactions");
     setTransactions(res.data);
   };
 

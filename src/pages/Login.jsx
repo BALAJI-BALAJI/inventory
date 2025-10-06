@@ -36,7 +36,7 @@ export default function Login() {
 
       if (role === "admin") {
         // ✅ Admin login (hardcoded) using /auth/login
-        res = await axios.post("http://localhost:5000/auth/login", form, {
+        res = await axios.post("https://inventory-backend-9skz.onrender.com/auth/login", form, {
           headers: { "Content-Type": "application/json" },
         });
       } else {
@@ -45,7 +45,7 @@ export default function Login() {
           identifier: form.username, // backend expects 'identifier' (username or phone)
           password: form.password,
         };
-        res = await axios.post("http://localhost:5000/staff/login", payload, {
+        res = await axios.post("https://inventory-backend-9skz.onrender.com/staff/login", payload, {
           headers: { "Content-Type": "application/json" },
         });
       }

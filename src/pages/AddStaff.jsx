@@ -18,7 +18,7 @@ export default function AddStaff() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/staff", form);
+      await axios.post("https://inventory-backend-9skz.onrender.com/staff", form);
       setMessage("Staff added successfully!");
       setForm({
         name: "",

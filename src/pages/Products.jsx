@@ -22,7 +22,7 @@ export default function Products() {
 
   const fetchCategories = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/categories");
+      const res = await axios.get("https://inventory-backend-9skz.onrender.com/categories");
       setCategories(res.data);
     } catch (err) {
       console.error("Error fetching categories", err);
@@ -31,7 +31,7 @@ export default function Products() {
 
   const fetchProducts = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/products");
+      const res = await axios.get("https://inventory-backend-9skz.onrender.com/products");
       setProducts(res.data);
     } catch (err) {
       console.error("Error fetching products", err);
@@ -49,17 +49,17 @@ export default function Products() {
     try {
       let product;
       if (editingId) {
-        await axios.put(`http://localhost:5000/products/${editingId}`, data);
+        await axios.put(`https://inventory-backend-9skz.onrender.com/products/${editingId}`, data);
         product = { ...data, _id: editingId };
         setEditingId(null);
       } else {
-        const res = await axios.post("http://localhost:5000/products", data);
+        const res = await axios.post("https://inventory-backend-9skz.onrender.com/products", data);
         product = res.data;
       }
 
       // Create Stock IN transaction only for new product
       if (!editingId && product.quantity > 0) {
-        await axios.post("http://localhost:5000/transactions", {
+        await axios.post("https://inventory-backend-9skz.onrender.com/transactions", {
           productId: product._id,
           productName: product.name,
           type: "IN",
@@ -97,7 +97,7 @@ export default function Products() {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/products/${id}`);
+      await axios.delete(`https://inventory-backend-9skz.onrender.com/products/${id}`);
       fetchProducts();
     } catch (err) {
       console.error("Error deleting product", err);
@@ -114,12 +114,12 @@ export default function Products() {
     }
 
     try {
-      await axios.put(`http://localhost:5000/products/${p._id}`, {
+      await axios.put(`https://inventory-backend-9skz.onrender.com/products/${p._id}`, {
         ...p,
         quantity: p.quantity - qtyNumber,
       });
 
-      await axios.post("http://localhost:5000/transactions", {
+      await axios.post("https://inventory-backend-9skz.onrender.com/transactions", {
         productId: p._id,
         productName: p.name,
         type: "OUT",

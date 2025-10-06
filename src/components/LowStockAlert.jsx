@@ -15,7 +15,7 @@ export default function LowStockAlert() {
   const fetchLowStockProducts = async () => {
     try {
       setLoading(true);
-      const res = await axios.get("http://localhost:5000/products");
+      const res = await axios.get("https://inventory-backend-9skz.onrender.com/products");
       const lowStock = res.data.filter((p) => p.quantity < 5);
       setLowStockProducts(lowStock);
       setLoading(false);

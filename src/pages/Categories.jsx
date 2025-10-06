@@ -11,17 +11,17 @@ export default function Categories() {
   }, []);
 
   const fetchCategories = async () => {
-    const res = await axios.get("http://localhost:5000/categories");
+    const res = await axios.get("https://inventory-backend-9skz.onrender.com/categories");
     setCategories(res.data);
   };
 
   const handleSubmit = async () => {
     if (!name) return;
     if (editingId) {
-      await axios.put(`http://localhost:5000/categories/${editingId}`, { name });
+      await axios.put(`https://inventory-backend-9skz.onrender.com/categories/${editingId}`, { name });
       setEditingId(null);
     } else {
-      await axios.post("http://localhost:5000/categories", { name });
+      await axios.post("https://inventory-backend-9skz.onrender.com/categories", { name });
     }
     setName("");
     fetchCategories();
@@ -34,7 +34,7 @@ export default function Categories() {
 
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this category?")) return;
-    await axios.delete(`http://localhost:5000/categories/${id}`);
+    await axios.delete(`https://inventory-backend-9skz.onrender.com/categories/${id}`);
     fetchCategories();
   };
 

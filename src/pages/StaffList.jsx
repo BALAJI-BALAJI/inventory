@@ -12,7 +12,7 @@ export default function StaffList() {
 
   const fetchStaff = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/staff");
+      const res = await axios.get("https://inventory-backend-9skz.onrender.com/staff");
       setStaff(res.data || []);
     } catch (err) {
       console.error(err);
@@ -25,7 +25,7 @@ export default function StaffList() {
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this user?")) return;
     try {
-      await axios.delete(`http://localhost:5000/staff/${id}`);
+      await axios.delete(`https://inventory-backend-9skz.onrender.com/staff/${id}`);
       fetchStaff();
     } catch (err) {
       console.error(err);

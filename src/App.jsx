@@ -15,7 +15,7 @@ const Transactions = lazy(() => import("./pages/Transactions"));
 const AddStaff = lazy(() => import("./pages/AddStaff"));
 const StaffList = lazy(() => import("./pages/StaffList"));
 
-// Tailwind loader component
+// Tailwind loader
 function Loader() {
   return (
     <div className="flex items-center justify-center h-screen">
@@ -43,22 +43,22 @@ export default function App() {
                 <div className="flex-1 flex flex-col">
                   <Navbar />
                   <div className="p-5 flex-1 overflow-auto">
+                    {/* ✅ NO nested <Routes> — just child <Route>s below */}
                     <Routes>
+                      <Route path="/" element={<Navigate to="/dashboard" />} />
                       <Route path="/dashboard" element={<Dashboard />} />
                       <Route path="/products" element={<Products />} />
                       <Route path="/suppliers" element={<Suppliers />} />
                       <Route path="/categories" element={<Categories />} />
                       <Route path="/transactions" element={<Transactions />} />
                       <Route path="/low-stock" element={<LowStockAlert />} />
-
                       {user?.role === "admin" && (
                         <>
                           <Route path="/addstaff" element={<AddStaff />} />
                           <Route path="/staff" element={<StaffList />} />
                         </>
                       )}
-
-                      <Route path="*" element={<Navigate to="/" />} />
+                      <Route path="*" element={<Navigate to="/dashboard" />} />
                     </Routes>
                   </div>
                 </div>
